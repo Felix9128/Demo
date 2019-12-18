@@ -29,7 +29,7 @@
     <hibernate.version>4.3.8.Final</hibernate.version>
     <spring-data-jpa.version>1.9.0.RELEASE</spring-data-jpa.version>
     <org.slf4j.version>1.6.1</org.slf4j.version>
-    <com.fasterxml.jackson.version>2.5.0</com.fasterxml.jackson.version>
+    <com.fasterxml.jackson.version>2.10.1</com.fasterxml.jackson.version>
   </properties>
 
   <dependencies>
