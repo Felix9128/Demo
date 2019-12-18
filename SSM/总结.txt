@@ -1,0 +1,117 @@
+一.Shiro概述
+    1.Shiro的概念：Apache Shiro是一个强大且易用的Java安全框架,执行身份验证、授权、密码学和会话管理。
+    2.Shiro的特点：Apache Shiro是一个Java安全框架，相较于Spring security，它更加轻量级
+    3.Shiro的作用：简化登录和权限等功能开发
+    4.Shiro的四大基石：
+        ①Authentication(身份认证)：
+        ②Authorization（授权）：
+        ③Session Management：管理用户特定的会话
+        ④Cryptography：通过使用加密算法保持数据安全同时易于使用
+    5.Shiro的架构：
+        ①Subject:代码直接交互对象，代表当前用户，仅仅是一个门面
+        ②SecurityManager:实际的执行者，所有的有关安全的操作都SecurityManager交互
+        ③Realm:获取安全数据，SecurityManager需要验证的信息从Realm中返回得到
+
+二.Shiro的入门
+    实现步骤：
+        1.导入jar包
+        2.拷贝资源
+        3.了解如何使用
+
+三.Shiro+Spring集成
+    实现步骤：
+        1.导入jar包
+        2.在web.xml中配置shiro核心过滤器
+            <!--shiro核心过滤器-->
+            <filter>
+                <filter-name>shiroFilter</filter-name>
+                <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+                <init-param>
+                    <param-name>targetFilterLifecycle</param-name>
+                    <param-value>true</param-value>
+                </init-param>
+            </filter>
+            <filter-mapping>
+                <filter-name>shiroFilter</filter-name>
+                <url-pattern>/*</url-pattern>
+            </filter-mapping>
+        3.创建applicationContext-shiro.xml配置文件，并在applicationContext.xml中引用
+            <!--引入shiro配置文件-->
+            <import resource="classpath:applicationContext-shiro.xml"/>
+        4.applicationContext-shiro.xml配置文件中，配置核心过滤器同名的<bean>，交给Spring管理
+        5.测试
+            登陆页面不拦截，其他页面全部拦截并跳转到登录页面
+
+四.身份认证（Authentication）
+    1.登陆
+        前端：
+            ①一个页面：实现一个login.jsp的页面，用来搜集登录信息（用户名和密码）！当点击登录时把登录信息提交到后台完成认证。
+        后台：
+            ②写一个Controller：接收前台传入的登录信息，完成登录认证。
+                具体步骤：
+                1）创建LoginConroller,写一个方法接收前台登录请求并接受登录信息(用户名和密码)
+                2）获取当前的 Subject. 调用 SecurityUtils.getSubject();
+                3）测试当前的用户是否已经被认证. 即是否已经登录. 调用 Subject 的 isAuthenticated()
+                4）若没有被认证, 则把用户名和密码封装为 UsernamePasswordToken 对象
+                5）执行登录: 调用 Subject 的 login(AuthenticationToken) 方法.
+            ③写一个realm获取登录数据
+                具体步骤：
+                1）自定义 Realm 的方法, 从数据库中获取对应的记录, 返回给 Shiro.
+                2）重写doGetAuthenticationInfo(AuthenticationToken) 方法.
+                3）返回结果，由shiro的SecurityManager对象完成对密码的比对.
+    2.加密
+        在自定义的Realm<bean>中注入加密
+             <bean id="myRealm" class="com.chenm.ssm.shiro.realm.MyRealm">
+                <!--注入加密配置-->
+                <property name="credentialsMatcher">
+                    <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                        <!--加密方法：MD5 只能加密，不能解密-->
+                        <property name="hashAlgorithmName" value="MD5"/>
+                        <!--加密次数-->
+                        <property name="hashIterations" value="1000"/>
+                    </bean>
+                </property>
+            </bean>
+    3.加密加盐
+        返回结果设置加盐
+            //加盐
+            ByteSource salt = ByteSource.Util.bytes("chenm_ssm");
+            return new SimpleAuthenticationInfo(username,user.getPassword(),salt,getName());
+
+五.授权（Authorizing）
+    1.授权的方式：
+        ①编程式：通过写if/else 授权代码块完成
+            Subject subject = SecurityUtils.getSubject();
+            if(subject.hasRole(“admin”)) {
+            //有权限
+            } else {
+            //无权限
+            }
+        ②注解式：通过在执行的Java方法上放置相应的注解完成
+            @RequiresRoles("admin")
+            public void hello() {
+            //有权限
+            }
+        ③在JSP/GSP 页面通过相应的标签完成（常用）
+            <shiro:hasRole name="admin">
+            <!— 有权限—>
+            </shiro:hasRole>
+    2.权限拦截：
+        方式一：在配置文件中一一配置，太麻烦（不用）
+        方式二：动态获取，查询数据库，返回map
+            实现：
+                ①创建一个类，在applicationContext-shiro.xml配置文件中，创建<bean>,交给Spring管理
+                    <!--创建一个bean-->
+                    <bean id="filterChainDefinitionMapBuilder" class="com.chenm.ssm.shiro.FilterChainDefinitionMapBuilder"/>
+                ②类中设置一个方法，返回值为map
+                    public Map<String,String> buildFilterChainDefinitionMap(){}
+                ③将返回值结果作为<bean>,交给Spring管理
+                    <!--引用创建bean和bean的方法:返回的结果是map-->
+                    <bean id="map" factory-bean="filterChainDefinitionMapBuilder" factory-method="buildFilterChainDefinitionMap"/>
+                ④在shiroFilter下引用这个结果bean
+                    <!--动态设置权限: 引用返回的结果map-->
+                    <property name="filterChainDefinitionMap" ref="map"/>
+                ⑤授权，返回权限给SecurityManager
+                    a.Realm继承AuthorizingRealm
+                    b.doGetAuthorizationInfo()方法中获取权限
+                    c.返回权限：return new SimpleAuthorizationInfo().addStringPermissions(perimissions);

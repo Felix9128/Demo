@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.chenm.ssm</groupId>
+  <artifactId>SSM</artifactId>
+  <packaging>war</packaging>
+  <version>2.0.RELEASE</version>
+  <name>ssm</name>
+  <url>http://www.chenm.com</url>
+
+  <!-- 添加开发人员信息 -->
+  <developers>
+    <developer>
+      <id>chenm</id>
+      <name>chenm</name>
+      <email>chenming9128@outlook.com</email>
+      <url>http://www.chenm.com</url>
+      <timezone>8</timezone>
+    </developer>
+  </developers>
+
+  <!-- 统一定义jar:文件版本便于升级 -->
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <org.springframework.version>4.2.5.RELEASE</org.springframework.version>
+    <hibernate.version>4.3.8.Final</hibernate.version>
+    <spring-data-jpa.version>1.9.0.RELEASE</spring-data-jpa.version>
+    <org.slf4j.version>1.6.1</org.slf4j.version>
+    <com.fasterxml.jackson.version>2.5.0</com.fasterxml.jackson.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- spring -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+      <version>${org.springframework.version}</version>
+    </dependency>
+
+    <!-- SpringMvc的支持包 -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${org.springframework.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aop</artifactId>
+      <version>${org.springframework.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${org.springframework.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- SpringMvc的json支持包 -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>${com.fasterxml.jackson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>${com.fasterxml.jackson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${com.fasterxml.jackson.version}</version>
+    </dependency>
+
+    <!-- 日志文件 -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${org.slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${org.slf4j.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.14</version>
+    </dependency>
+
+    <!--连接数据库-->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.21</version>
+    </dependency>
+
+    <!-- apache commons- -->
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.5</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.2.2</version>
+    </dependency>
+
+    <!-- Spring上传需要用到io包-->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>1.3.2</version>
+    </dependency>
+
+    <!--数据库连接-->
+    <dependency>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>1.2.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>1.6.2</version>
+    </dependency>
+
+    <!-- 引入jstl -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+    <!-- 引入taglibs支持包 -->
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <!-- 这个scope 只能作用在编译和测试时，同时没有传递性。表示在运行的时候不添加此jar文件 -->
+      <scope>provided</scope>
+    </dependency>
+
+    <!--mybatis-->
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis</artifactId>
+      <version>3.2.1</version>
+    </dependency>
+
+    <!-- 动态代理 -->
+    <dependency>
+      <groupId>cglib</groupId>
+      <artifactId>cglib</artifactId>
+      <version>2.2.2</version>
+    </dependency>
+
+    <!-- Java字节码的类库 -->
+    <dependency>
+      <groupId>org.javassist</groupId>
+      <artifactId>javassist</artifactId>
+      <version>3.18.1-GA</version>
+    </dependency>
+
+      <!--mybatis-spring -->
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis-spring</artifactId>
+      <version>1.2.2</version>
+    </dependency>
+
+    <!--分页-->
+    <dependency>
+      <groupId>com.github.pagehelper</groupId>
+      <artifactId>pagehelper</artifactId>
+      <version>5.0.0</version>
+    </dependency>
+
+    <!--权限包-->
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-all</artifactId>
+      <version>1.2.2</version>
+    </dependency>
+
+  </dependencies>
+
+    <build>
+    <finalName>SSM</finalName>
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.mortbay.jetty</groupId>
+          <artifactId>jetty-maven-plugin</artifactId>
+          <version>8.1.15.v20140411</version>
+          <configuration>
+            <stopPort>9966</stopPort>
+            <stopKey>foo</stopKey>
+            <webAppConfig>
+              <contextPath>/</contextPath>
+            </webAppConfig>
+          </configuration>
+        </plugin>
+
+      </plugins>
+    </pluginManagement>
+
+      <plugins>
+        <!--代码生成器插件-->
+        <plugin>
+          <groupId>org.mybatis.generator</groupId>
+          <artifactId>mybatis-generator-maven-plugin</artifactId>
+          <version>1.3.2</version>
+          <configuration>
+            <verbose>true</verbose>
+            <!-- 代码存在就覆盖 -->
+            <overwrite>true</overwrite>
+            </configuration>
+        </plugin>
+      </plugins>
+    </build>
+</project>
