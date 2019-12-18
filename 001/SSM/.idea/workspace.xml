@@ -6,9 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3e9cc02-7d6f-4553-9ecd-93f196bbefb0" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/chenm/ssm/web/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/chenm/ssm/web/controller/LoginController.java" afterDir="false" />
-    </list>
+    <list default="true" id="b3e9cc02-7d6f-4553-9ecd-93f196bbefb0" name="Default" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -468,6 +466,7 @@
       <workItem from="1576659895581" duration="88000" />
       <workItem from="1576660003823" duration="1855000" />
       <workItem from="1576663344656" duration="28000" />
+      <workItem from="1576664399387" duration="321000" />
     </task>
     <servers />
   </component>
