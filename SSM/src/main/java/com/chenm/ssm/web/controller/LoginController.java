@@ -22,6 +22,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class LoginController {
 
+    /**
+     * 登陆
+     * @param username
+     * @param password
+     * @return
+     */
     @RequestMapping("login")
     public String login(String username,String password) {
         //获取当前subject
